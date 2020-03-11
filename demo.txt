@@ -1,0 +1,315 @@
+#include "stdio.h"
+#include "stdlib.h"
+#include <locale.h>
+#include "Windows.h"
+#include "String.h"
+//定义学生结构体
+struct Student{
+	char  counts[3000]; 
+    char num[100];
+	char name[1000]; 
+	char sex[2];
+	char  college[20]; 
+	char  phone[20];
+	char  school[20]; 
+	char  infected[20];
+	char  address[20];
+	char  contact[20];
+	char health[20];
+};
+//定义学生数量
+int counts=0;
+char delnum[10];
+//1:初始化窗口和界面
+void initWindow(char *title);
+//2:初始化菜单
+void initMenu();
+//3.添加学生信息
+void addStudent(struct Student stu[100]);
+//4.显示学生信息
+void display(struct Student stu[100]);
+//5.查询学生信息
+void find(struct Student stu[100]);
+////删除学生信息
+void del(struct Student stu[100]);
+//保存学生信息
+void Save(struct Student stu[100]);
+//程序入口
+ main(){
+	//格式化代码快捷键:ctrl+K+F
+	//定义学生数组
+	struct Student stu[100];
+	char result=' ';
+	char choice=' ';
+	char title[]="\t\t\t*********欢迎进入西北师范大学学生疫情信息管理系统！********\n\n\n";
+	//1:初始化窗口和界面
+	initWindow(title);
+	initMenu();
+	do{//循环
+
+
+		printf("请选择菜单（1-8）:\n");
+		//清除缓冲区的内容
+		fflush(stdin);
+		scanf("%c",&result);
+		//清除缓冲区的内容
+		fflush(stdin);
+		if(result>='1'&&result<='8'){
+			switch(result){
+			case '1': //判断是否录入学生信息
+				while(1)
+				{
+					addStudent(stu);//调用添加学生信息的函数
+					printf("是否继续录入学生信息(y/n)：");
+					scanf("%c",&choice);
+					if(choice=='n'){
+						break;
+					}
+
+
+				}
+				break;
+			case '2': display(stu);//调用显示信息的函数
+				printf("\n");
+				break;
+			case '3': 
+				find(stu);//调用查询信息的函数
+				break;
+			case '4':
+				del(stu);
+				break;
+			case '5':
+			case '6':
+			case '7':
+				Save(stu);
+				break;
+			default:printf("谢谢使用！");
+
+
+			} 
+		}
+		else printf("输入有误！");
+	}while(result!='8');
+}
+//1:初始窗口和界面
+void initWindow(char *title){
+	//设置窗口大小
+	system("mode con:cols=90 lines=200");
+	//设置窗口字体的颜色
+	system("color 4D");
+	//循环输出标题（条件：）
+	while(*title!=0)
+	{
+		//输出字符指针所指向的内容
+		printf("%c",*title);
+		//将指针指向下一个字符
+		title++;
+		//休眠
+		Sleep(50);
+
+
+	}
+}
+//2:初始化菜单
+void initMenu(){
+	printf("\t\t\t=========学生疫情信息管理系统=========\n");
+	printf("\t\t\t\t 1.录入学生疫情信息\n");
+	printf("\t\t\t\t 2.浏览学生疫情信息\n");
+	printf("\t\t\t\t 3.查询学生疫情信息\n");
+	printf("\t\t\t\t 4.删除学生疫情信息\n");
+	printf("\t\t\t\t 5.添加学生疫情信息\n");
+	printf("\t\t\t\t 6.修改学生疫情信息\n");
+	printf("\t\t\t\t 7.保存学生疫情信息\n");
+	printf("\t\t\t\t 8.退出系统!\n");
+	printf("\t\t\t==================================\n");
+}
+//3.添加学生信息
+void addStudent(struct Student stu[100])
+{
+		while(1){
+			printf("请输入需要创建的学生人数(1-2000):\n");
+            scanf("%s",stu[counts].address);
+            if(counts<2000)
+            {
+            	break;
+			}
+			else printf("输入有误！");
+		}
+	int len=0;
+	while(1){printf("\n请输入要插入的学生信息的学号(12位)：");
+	scanf("%s",stu[counts].num);
+	len=strlen(stu[counts].num);
+	if(strcmp(stu[counts].num,stu[counts-1].num)==0){
+		printf("该学生已存在！请重新输入");
+	}
+	else if(len==12){
+		break;	
+	}
+	else printf("输入有误！");
+	}
+	printf("\n请输入要插入的学生信息的姓名：");
+	scanf("%s",stu[counts].name);
+	//循环，并且判断学号输入格式是否规范
+	while(1){
+		printf("\n请输入要插入的学生的性别:");
+		scanf("%s",stu[counts].sex);
+		if(strcmp(stu[counts].sex,"男")==0||strcmp(stu[counts].sex,"女")==0)
+		{
+			break;
+		}
+		else printf("输入有误！");  
+	}
+	printf("\n请输入要插入的学生信息的学生所在学院：");
+	scanf("%s",stu[counts].college);
+	printf("\n请输入要插入的学生信息的学生电话号码：");
+	scanf("%s",stu[counts].phone);
+	printf("\n请输入要插入的学生信息的是否为留校学生(是/否)：");
+	scanf("%s",stu[counts].school);
+	printf("\n请输入要插入的学生信息的是否被感染(是/否)：");
+	scanf("%s",stu[counts].infected);
+	printf("\n请输入要插入的学生信息的学生当前所在地址：");
+	scanf("%s",stu[counts].address);
+	printf("\n请输入要插入的学生信息的是否与武汉疫区人员接触（是/否）：");
+	scanf("%s",stu[counts].contact);
+	printf("\n请输入要插入的学生信息的当天健康状况有无发热（有/无）：");
+	scanf("%s",stu[counts].health);
+	printf("信息已经录入系统！");
+	counts++;
+	//清除缓冲区的内容
+	fflush(stdin);
+
+
+}
+//4.显示学生信息
+void display(struct Student stu[100])
+{
+	int i;
+	if(counts==0){
+		printf("没有数据！");
+	}
+	else{ 
+		printf("人数\t学号\t姓名\t性别\t所在学院\t电话\t留校\t感染\t地区\t接触\t健康状况\n");
+		for(i=0;i<counts;i++){
+			printf("%s\t",stu[i].counts);
+			printf("%s\t",stu[i].num);
+			printf("%s\t",stu[i].name);
+			printf("%s\t",stu[i].sex);
+			printf("%s\t",stu[i].college);
+			printf("%s\t",stu[i].phone);
+			printf("%s\t",stu[i].school);
+			printf("%s\t",stu[i].infected);
+			printf("%s\t",stu[i].address);
+			printf("%s\t",stu[i].contact);
+			printf("%s\n",stu[i].health);
+		}
+
+
+	}
+	FILE *fp;
+	int counts[3000];
+	char num[100];
+	char name[1000];
+	char sex[2];
+	char college[20];
+	char phone[20]; 
+	char school[20]; 
+	char  infected[20];
+	char  address[20];
+	char  contact[20];
+	char health[20];
+	fp=fopen("xinxi.text","r");
+	if(fp=NULL){
+	printf("文件打开错误\n");
+	exit(0);
+	}
+	else{
+		printf("人数\t学号\t姓名\t性别\t所在学院\t电话\t留校\t感染\t地区\t接触\t健康状况\n");
+		while(!feof(fp)){
+		fscanf(fp,"%s %s %s %s %s %s %s %s %s %s %s",counts,num,name,sex,college,phone,school,infected,address,contact,health);
+		printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",counts,num,name,sex,college,phone,school,infected,address,contact,health);
+		}
+	}
+	fclose(fp);
+}
+
+
+//5.根据学号查询学生信息
+
+
+void find(struct Student stu[100])
+{
+	int i;
+	char findnum[10];
+	printf("请输入要查询学生的学号:");
+	scanf("%s",findnum);
+	for(i=0;i<counts;i++){
+		if(strcmp(findnum,stu[i].num)==0){
+			printf("人数\t学号\t姓名\t性别\t所在学院\t电话\t留校\t感染\t地区\t接触\t健康状况\n");
+			printf("%s\t",stu[i],counts);
+			printf("%s\t",stu[i].num);
+			printf("%s\t",stu[i].name);
+			printf("%s\t",stu[i].sex);
+			printf("%s\t",stu[i].college);
+			printf("%s\t",stu[i].phone);
+			printf("%s\t",stu[i].school);
+			printf("%s\t",stu[i].infected);
+			printf("%s\t",stu[i].address);
+			printf("%s\t",stu[i].contact);
+			printf("%s\n",stu[i].health);
+			break;
+		}
+		else if(1==counts)
+			printf("对不起！没有该学生\n");
+	}
+
+
+}
+//6.根据学号删除学生信息
+void del(struct Student stu[100]){
+	int i,j;
+	char delnum[10];
+	printf("请输入学号\n");
+
+
+	//输入学号
+	scanf("%s",delnum);
+	for(i=0;i<counts;i++){
+		if(strcmp(stu[i].num,delnum)==0)
+		{for(j=i;j<counts;j++)
+		stu[j]=stu[j+1];
+		counts--;}
+		break;
+	}//找到要删除学号的位置
+
+
+}
+//保存学生信息
+void Save(struct Student stu[100]) {
+	//FILE *freopen(const char *filename,const char*mode,FILE *stream);
+	//stream 代表被重定向以后的流，包括输入流（stdin）、输出流（stdout);
+	int i = 0;
+	FILE *file;
+	file = fopen("xinxi.txt","ab");//打开一个文件即output.txt
+	//fprintf就是在文件中打印字符
+	fprintf(file,"人数\t学号\t姓名\t性别\t所在学院\t电话\t留校\t感染\t地区\t接触\t健康状况\n");//打印到文件中
+	printf("\n");
+	while (i<counts) {
+		https://github.com/yanzhidandang/charon.git
+		fprintf(file,"%s\t", stu[i].counts);
+		fprintf(file,"%s\t", stu[i].num);
+		fprintf(file,"%s\t", stu[i].name);
+		fprintf(file,"%s\t", stu[i].sex);
+		fprintf(file,"%s\t", stu[i].);
+		fprintf(file,"%s\t", stu[i].phone);
+		fprintf(file,"%s\t", stu[i].school);
+		fprintf(file,"%s\t", stu[i].infected);
+		fprintf(file,"%s\t", stu[i].address);
+		fprintf(file,"%s\t", stu[i].contact);
+		fprintf(file,"%s\t", stu[i].health);
+	
+		i++;
+		fprintf(file,"\n");
+	}
+	fclose(file);
+	printf("保存成功\n");
+}
